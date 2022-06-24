@@ -26,7 +26,7 @@ class Square:
                 txt += '\n'
 
             for i in range(self.size):
-                txt += ' ' * self.position[0] + '#' * self.size + '\n'
+                txt += '\n' * self.position[0] + '#' * self.size
 
         return txt
 
