@@ -19,16 +19,16 @@ class Square:
     def __str__(self):
 
         txt = ''
-        for i in range(self.position[1]):
-            txt += '\n'
-        for i in range(self.size):
-            for j in range(self.position[0]):
-                txt += ' '
-            for j in range(self.size):
-                txt += '#'
-            txt += '\n'
+        if (self.__size == 0):
+            pass
+        else:
+            for i in range(self.position[1]):
+                txt += '\n'
+
+            for i in range(self.size):
+                txt += ' ' * self.position[0] + '#' * self.size + '\n'
+
         return txt
-        
 
     @property
     def size(self):
