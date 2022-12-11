@@ -1,29 +1,28 @@
 #!/usr/bin/node
-// Write a script that gets the contents of a webpage and stores it in a file.
-// The first argument is the Movie ID - example: 3 = “Return of the Jedi”
-// Display one character name by line in the same order of the list “characters” in the /films/ endpoint
-// You must use the Star wars API
-// You must use the module request
+// A script that prints all characters of a Star Wars movie
+// Display characters name in the same order of the list  “characters” in the /films/ response
 
 const request = require('request');
+const url = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
 
-const requestURL = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
-
-request(requestURL, function (err, response, body) {
+function printCharacters (characters, idx) {
+  request(characters[idx], (err, res, body) => {
     if (err) {
-        return console.log(err);
+      console.log(err);
+    } else {
+      console.log(JSON.parse(body).name);
+      if (idx + 1 < characters.length) {
+        printCharacters(characters, idx + 1);
+      }
     }
-    
-    const pBody = JSON.parse(body);
-    
-    for (let i = 0; i < pBody.characters.length; i++) {
-        request(pBody.characters[i], function (err, response, body) {
-        if (err) {
-            return console.log(err);
-        }
-        const pBody = JSON.parse(body);
-        console.log(pBody.name);
-        });
-    }
-    }
-);
+  });
+}
+
+request(url, (err, res, body) => {
+  if (err) {
+    console.log(err);
+  } else {
+    const characters = JSON.parse(body).characters;
+    printCharacters(characters, 0);
+  }
+});
