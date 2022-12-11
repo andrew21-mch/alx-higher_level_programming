@@ -1,7 +1,6 @@
 #!/usr/bin/node
 // Write a script that gets the contents of a webpage and stores it in a file.
 // The first argument is the Movie ID - example: 3 = “Return of the Jedi”
-// Display one character name by line in the same order of the list “characters” in the /films/ endpoint
 // You must use the Star wars API
 // You must use the module request
 

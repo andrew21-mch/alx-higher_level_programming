@@ -3,26 +3,24 @@
 // Display characters name in the same order of the list  “characters” in the /films/ response
 
 const request = require('request');
-const url = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
 
-function printCharacters (characters, idx) {
-  request(characters[idx], (err, res, body) => {
+const requestURL = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
+
+request(requestURL, function (err, response, body) {
     if (err) {
-      console.log(err);
-    } else {
-      console.log(JSON.parse(body).name);
-      if (idx + 1 < characters.length) {
-        printCharacters(characters, idx + 1);
-      }
+        return console.log(err);
     }
-  });
-}
-
-request(url, (err, res, body) => {
-  if (err) {
-    console.log(err);
-  } else {
-    const characters = JSON.parse(body).characters;
-    printCharacters(characters, 0);
-  }
-});
+    
+    const pBody = JSON.parse(body);
+    
+    for (let i = 0; i < pBody.characters.length; i++) {
+        request(pBody.characters[i], function (err, response, body) {
+        if (err) {
+            return console.log(err);
+        }
+        const pBody = JSON.parse(body);
+        console.log(pBody.name);
+        });
+    }
+    }
+);
